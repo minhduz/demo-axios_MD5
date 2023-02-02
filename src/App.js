@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import CharactersContainer from './components/CharactersContainer';
+import Result from './components/Result';
+import SearchBox from './components/SearchBox';
+import axios from 'axios';
+import { useState } from 'react';
+const URL = 'https://breakingbadapi.com/api/'
 
 function App() {
+  const [character,setChatacter] = useState(null);
+
+  axios
+  .get(URL)
+  .then((response) => {
+    setChatacter(response.data)
+    console.log(character);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <CharactersContainer>
+        <SearchBox/>
+        <Result/>
+      </CharactersContainer>
+
     </div>
   );
 }
